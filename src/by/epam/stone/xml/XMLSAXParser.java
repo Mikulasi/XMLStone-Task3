@@ -6,20 +6,22 @@ import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
+import javax.xml.parsers.SAXParser;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
-public class SAXParser {
-    public static final Logger LOGGER = Logger.getLogger(SAXParser.class);
+public class XMLSAXParser {
+    public static final Logger LOGGER = Logger.getLogger(XMLSAXParser.class);
 
-    public static void parsingSAX(){
+    public ArrayList<Stone> parsingSAX(){
 
-        SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
         try {
-            javax.xml.parsers.SAXParser saxParser = saxParserFactory.newSAXParser();
+            SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
+            SAXParser parser = saxParserFactory.newSAXParser();
             SAXHandler handler = new SAXHandler();
-            saxParser.parse(new File("src/resources/stone.xml"), handler);
-            for (Stone st : handler.stoneList) {
+            parser.parse(new File("src/resources/stone.xml"), handler);
+            for (Stone st : handler.getStoneList()) {
                 LOGGER.info(st);
             }
         }catch (ParserConfigurationException e){
@@ -28,6 +30,6 @@ public class SAXParser {
             LOGGER.error("SAX Parser exception: " +e);
         } catch (IOException e){
             LOGGER.error("I/O exception: " +e);
-        }
+        }return null;
     }
 }

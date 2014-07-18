@@ -8,16 +8,20 @@ import org.xml.sax.helpers.DefaultHandler;
 import java.util.ArrayList;
 
 public class SAXHandler extends DefaultHandler {
-    ArrayList<Stone> stoneList = new ArrayList<>();
-    Stone stone;
-    private StringBuilder dataBuffer;
+    private ArrayList<Stone> stoneList = new ArrayList<>();
+    private Stone stone;
+    private String holder;
+
+    public ArrayList<Stone> getStoneList() {
+        return stoneList;
+    }
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         switch (qName) {
 
             case "stone":
-                stone = new Stone() {};
+                stone = new Stone();
                 stone.setId(Integer.parseInt(attributes.getValue("id")));
                 break;
         }
@@ -33,25 +37,25 @@ public class SAXHandler extends DefaultHandler {
                     break;
 
                 case "name":
-                    stone.setName(dataBuffer.toString());
+                    stone.setName(holder);
                     break;
                 case "preciousness":
-                    stone.setPreciousness(dataBuffer.toString());
+                    stone.setPreciousness(holder);
                     break;
                 case "origin":
-                    stone.setOrigin(dataBuffer.toString());
+                    stone.setOrigin(holder);
                     break;
                 case "color":
-                    stone.setColor(dataBuffer.toString());
+                    stone.setColor(holder);
                     break;
                 case "transparency":
-                    stone.setTransparency(Double.parseDouble(dataBuffer.toString()));
+                    stone.setTransparency(Double.parseDouble(holder));
                     break;
                 case "faces":
-                    stone.setFaces(Integer.parseInt(dataBuffer.toString()));
+                    stone.setFaces(Integer.parseInt(holder));
                     break;
                 case "value":
-                    stone.setValue(Integer.parseInt(dataBuffer.toString()));
+                    stone.setValue(Integer.parseInt(holder));
                     break;
             }
         }
@@ -59,7 +63,6 @@ public class SAXHandler extends DefaultHandler {
 
         @Override
         public void characters ( char[] ch, int start, int length)throws SAXException {
-            dataBuffer = new StringBuilder();
-            dataBuffer.append(ch, start, length);
+            holder = String.valueOf(ch, start, length);
         }
     }

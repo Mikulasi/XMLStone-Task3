@@ -9,8 +9,6 @@ public class Stone {
     private double transparency;
     private String origin;
     private int faces;
-    private PreciousStone preciousStone;
-    private SemipreciousStone semipreciousStone;
     private String preciousness;
     private int value;
 
@@ -50,7 +48,7 @@ public class Stone {
     }
 
     public int getWeight() {
-        return this.weight;
+        return weight;
     }
 
     public void setColor(String color) {
@@ -58,7 +56,7 @@ public class Stone {
     }
 
     public String getColor() {
-        return this.color;
+        return color;
     }
 
     public void setHardness(int hardness) {
@@ -66,7 +64,7 @@ public class Stone {
     }
 
     public int getHardness() {
-        return this.hardness;
+        return hardness;
     }
 
     public void setTransparency(double transparency) {
@@ -74,21 +72,9 @@ public class Stone {
     }
 
     public double getTransparency() {
-        return this.transparency;
+        return transparency;
     }
 
-    public PreciousStone getPreciousStone(){
-        return preciousStone;
-    }
-    public void setPreciousStone(PreciousStone stone){
-        preciousStone=stone;
-    }
-    public SemipreciousStone getSemipreciousStone(){
-        return semipreciousStone;
-    }
-    public void setSemipreciousStone(SemipreciousStone semipreciousStone){
-        this.semipreciousStone=semipreciousStone;
-    }
     public int getValue(){
         return value;
     }
@@ -98,12 +84,18 @@ public class Stone {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append(getClass().getName());
-        builder.append("\nWeight: ").append(this.getWeight());
-        builder.append("\nColor: ").append(this.getColor().toString());
-        builder.append("\nHardness: ").append(this.getHardness());
-        builder.append("\nTransparency: ").append(this.getTransparency());
-        return builder.toString();
+        return "Stone{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", weight=" + weight +
+                ", color='" + color + '\'' +
+                ", hardness=" + hardness +
+                ", transparency=" + transparency +
+                ", origin='" + origin + '\'' +
+                ", faces=" + faces +
+                ", preciousness='" + preciousness + '\'' +
+                ", value=" + value +
+                '}';
     }
+
 }

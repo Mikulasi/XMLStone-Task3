@@ -2,79 +2,69 @@ package by.epam.stone.xml;
 
 import by.epam.stone.entities.Stone;
 
-import javax.xml.namespace.QName;
-import javax.xml.stream.XMLEventReader;
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.events.Attribute;
-import javax.xml.stream.events.EndElement;
-import javax.xml.stream.events.StartElement;
-import javax.xml.stream.events.XMLEvent;
+import javax.xml.stream.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class StAXParser {
-    public void parseStAX() {
-        String fileName = "src/resources/stone.xml";
-        StAXParser.parseXML(fileName);
-        List<Stone> stList = parseXML(fileName);
-        for (Stone stn : stList) {
-            System.out.println(stn.toString());
+    private ArrayList<Stone> stones;
+    private Stone stone;
+
+    public List<Stone> parseXML(String fileName) {
+        try {
+            XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
+            XMLStreamReader xmlReader = xmlInputFactory.createXMLStreamReader(new FileInputStream(fileName));
+            parseStAX(xmlReader);
+            return stones;
+        } catch (FileNotFoundException | XMLStreamException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
-    private static List<Stone> parseXML(String fileName) {
-        ArrayList<Stone> stnList = new ArrayList<>();
-        Stone stn = null;
-        XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
-        try {
-            XMLEventReader xmlEventReader = xmlInputFactory.createXMLEventReader(new FileInputStream(fileName));
-            while (xmlEventReader.hasNext()) {
-                XMLEvent xmlEvent = xmlEventReader.nextEvent();
-                if (xmlEvent.isStartElement()) {
-                    StartElement startElement = xmlEvent.asStartElement();
-                    if (startElement.getName().getLocalPart().equals("stone")) {
-                        stn = new Stone();
-                        Attribute idAttr = startElement.getAttributeByName(new QName("id"));
-                        if (idAttr != null) {
-                            stn.setId(Integer.parseInt(idAttr.getValue()));
-                        }
-                    } else if (startElement.getName().getLocalPart().equals("name")) {
-                        xmlEvent = xmlEventReader.nextEvent();
-                        stn.setName(xmlEvent.asCharacters().getData());
-                    } else if (startElement.getName().getLocalPart().equals("preciousness")) {
-                        xmlEvent = xmlEventReader.nextEvent();
-                        stn.setPreciousness(xmlEvent.asCharacters().getData());
-                    } else if (startElement.getName().getLocalPart().equals("origin")) {
-                        xmlEvent = xmlEventReader.nextEvent();
-                        stn.setOrigin(xmlEvent.asCharacters().getData());
-                    } else if (startElement.getName().getLocalPart().equals("color")) {
-                        xmlEvent = xmlEventReader.nextEvent();
-                        stn.setColor(xmlEvent.asCharacters().getData());
-                    } else if (startElement.getName().getLocalPart().equals("transparency")) {
-                        xmlEvent = xmlEventReader.nextEvent();
-                        stn.setTransparency(Double.parseDouble(xmlEvent.asCharacters().getData()));
-                    } else if (startElement.getName().getLocalPart().equals("faces")) {
-                        xmlEvent = xmlEventReader.nextEvent();
-                        stn.setFaces(Integer.parseInt(xmlEvent.asCharacters().getData()));
-                    } else if (startElement.getName().getLocalPart().equals("value")) {
-                        xmlEvent = xmlEventReader.nextEvent();
-                        stn.setValue(Integer.parseInt(xmlEvent.asCharacters().getData()));
+    private void parseStAX(XMLStreamReader xmlReader) throws XMLStreamException {
+        while (xmlReader.hasNext()) {
+            int event = xmlReader.next();
+            switch (event) {
+                case XMLStreamConstants.START_ELEMENT:
+                    String localName = xmlReader.getLocalName();
+                    switch (localName) {
+                        case "stone":
+                            stone = new Stone();
+                            stone.setId(Integer.parseInt(xmlReader.getAttributeValue("", "id")));
+                            break;
+                        case "name":
+                            stone.setName(xmlReader.getElementText());
+                            break;
+                        case "preciousness":
+                            stone.setPreciousness(xmlReader.getElementText());
+                            break;
+                        case "origin":
+                            stone.setOrigin(xmlReader.getElementText());
+                            break;
+                        case "color":
+                            stone.setColor(xmlReader.getElementText());
+                            break;
+                        case "transparency":
+                            stone.setTransparency(Double.parseDouble(xmlReader.getElementText()));
+                            break;
+                        case "faces":
+                            stone.setFaces(Integer.parseInt(xmlReader.getElementText()));
+                            break;
+                        case "value":
+                            stone.setValue(Integer.parseInt(xmlReader.getElementText()));
+                            break;
                     }
-                }
-                if (xmlEvent.isEndElement()) {
-                    EndElement endElement = xmlEvent.asEndElement();
-                    if (endElement.getName().getLocalPart().equals("helm-type")) {
-                        stnList.add(stn);
+                    break;
+                case XMLStreamConstants.END_ELEMENT:
+                    if (xmlReader.getLocalName().equals("stone")) {
+                        stones.add(stone);
                     }
-                }
+                    break;
             }
-
-        } catch (FileNotFoundException | XMLStreamException e) {
-            e.printStackTrace();
+            break;
         }
-        return stnList;
     }
 }

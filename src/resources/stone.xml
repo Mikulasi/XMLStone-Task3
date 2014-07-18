@@ -2,25 +2,21 @@
 <stones>
     <stone id="1">
         <name>Diamond</name>
-        <preciousness>precious</preciousness>
+        <preciousness>Precious</preciousness>
         <origin>Russia</origin>
-        <visualParameters>
-            <color>white</color>
-            <transparency>65.3</transparency>
-            <faces>7</faces>
-        </visualParameters>
+        <color>White</color>
+        <transparency>65.3</transparency>
+        <faces>7</faces>
         <value>3000</value>
     </stone>
 
     <stone id="2">
-    <name>Amder</name>
-    <preciousness>semiprecious</preciousness>
-    <origin>USA</origin>
-    <visualParameters>
+        <name>Amder</name>
+        <preciousness>Semiprecious</preciousness>
+        <origin>USA</origin>
         <faces>2</faces>
-        <color>yellow</color>
+        <color>Yellow</color>
         <transparency>26.9</transparency>
-    </visualParameters>
-    <value>325</value>
+        <value>325</value>
     </stone>
 </stones>
