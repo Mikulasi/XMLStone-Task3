@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<stones>
+    <stone id="1">
+        <name>Diamond</name>
+        <preciousness>precious</preciousness>
+        <origin>Russia</origin>
+        <visualParameters>
+            <color>white</color>
+            <transparency>65.3</transparency>
+            <faces>7</faces>
+        </visualParameters>
+        <value>3000</value>
+    </stone>
+
+    <stone id="2">
+    <name>Amder</name>
+    <preciousness>semiprecious</preciousness>
+    <origin>USA</origin>
+    <visualParameters>
+        <faces>2</faces>
+        <color>yellow</color>
+        <transparency>26.9</transparency>
+    </visualParameters>
+    <value>325</value>
+    </stone>
+</stones>

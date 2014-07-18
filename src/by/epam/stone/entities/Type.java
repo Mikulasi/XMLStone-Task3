@@ -1,0 +1,5 @@
+package by.epam.stone.entities;
+
+public enum Type {
+    UNDEFINED, MALACHITE, AMETHYST, MOONSTONE, OPAL, BERYL, PEARL, RUBY, SAPPHIRE, CORAL, DIAMOND, TOPAZ, AQUAMARINE
+}
